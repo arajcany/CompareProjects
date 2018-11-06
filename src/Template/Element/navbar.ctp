@@ -27,6 +27,16 @@
             </li>
             <li class="nav-item active">
                 <?php
+                $title = 'Extension Lists';
+                $url = ['controller' => 'extension_lists'];
+                $options = [
+                    'class' => "nav-link"
+                ];
+                echo $this->Html->link($title, $url, $options)
+                ?>
+            </li>
+            <li class="nav-item active">
+                <?php
                 $title = 'Compare';
                 $url = ['controller' => 'select'];
                 $options = [

@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Project $leftProject
  * @var \App\Model\Entity\Project $rightProject
+ * @var \App\Model\Entity\ExtensionList $extensionList
  * @var array $leftFileList
  * @var array $rightFileList
  */
@@ -36,7 +37,6 @@ foreach ($rightFileList as $rightFile) {
 
 $combinedRelativePaths = array_unique($combinedRelativePaths);
 natsort($combinedRelativePaths);
-//debug($combinedRelativePaths);
 
 $differenceList = [];
 foreach ($combinedRelativePaths as $relativePath) {

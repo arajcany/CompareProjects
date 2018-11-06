@@ -22,6 +22,12 @@
         ];
         echo $this->Form->control('left-project', $opts);
         echo $this->Form->control('right-project', $opts);
+
+        $opts = [
+            'options' => $extensionLists->toArray(),
+            'empty' => [null => 'None'],
+        ];
+        echo $this->Form->control('extension-list', $opts);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Compare')) ?>

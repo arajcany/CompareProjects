@@ -6,15 +6,18 @@ use App\Controller\AppController;
 use App\Model\Table\ProjectsTable;
 use arajcany\ToolBox\Utility\ZipMaker;
 use arajcany\ToolBox\Utility\Security\Security;
+use App\Model\Table\ExtensionListsTable;
 
 /**
  * Compare Controller
  *
  * @property \App\Model\Table\ProjectsTable $Projects
+ * @property \App\Model\Table\ExtensionListsTable $ExtensionLists
  */
 class CompareController extends AppController
 {
     public $Projects;
+    public $ExtensionLists;
 
     /**
      * Initialize method
@@ -24,6 +27,7 @@ class CompareController extends AppController
     public function initialize()
     {
         $this->loadModel('Projects');
+        $this->loadModel('ExtensionLists');
         parent::initialize();
 
         return null;
@@ -40,7 +44,7 @@ class CompareController extends AppController
     }
 
 
-    public function compareProjects($l = null, $r = null)
+    public function compareProjects($l = null, $r = null, $ext = null)
     {
         if ($l == null || $r == null) {
             return $this->redirect(['controller' => 'select']);
@@ -58,6 +62,30 @@ class CompareController extends AppController
         $rightProject = $this->Projects->find('all')->where(['id' => $r])->first();
         $this->set("rightProject", $rightProject);
 
+        /**
+         * @var \App\Model\Entity\ExtensionList $extensionList
+         */
+        if ($ext != null) {
+            $extensionList = $this->ExtensionLists->find('all')->where(['id' => $ext])->first();
+            $this->set("extensionList", $extensionList);
+
+            if ($extensionList->type == 'white') {
+                $whitelist = explode(",", $extensionList->extension_list);
+                $blacklist = null;
+            } elseif ($extensionList->type == 'black') {
+                $whitelist = null;
+                $blacklist = explode(",", $extensionList->extension_list);
+            } else {
+                $whitelist = null;
+                $blacklist = null;
+            }
+
+        } else {
+            $this->set("extensionList", null);
+            $whitelist = null;
+            $blacklist = null;
+        }
+
 
         $zm = new ZipMaker();
 
@@ -74,10 +102,10 @@ class CompareController extends AppController
             "src\\XMPie\\",
         ];
 
-        $leftFileList = $zm->makeFileList($leftProject->location, $ignoreFilesFolders);
-        $this->set("leftFileList", $leftFileList);
+        $leftFileList = $zm->makeFileList($leftProject->location, $ignoreFilesFolders, false, $whitelist, $blacklist);
+        $rightFileList = $zm->makeFileList($rightProject->location, $ignoreFilesFolders, false, $whitelist, $blacklist);
 
-        $rightFileList = $zm->makeFileList($rightProject->location, $ignoreFilesFolders);
+        $this->set("leftFileList", $leftFileList);
         $this->set("rightFileList", $rightFileList);
 
     }
