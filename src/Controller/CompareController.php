@@ -70,11 +70,17 @@ class CompareController extends AppController
             $this->set("extensionList", $extensionList);
 
             if ($extensionList->type == 'white') {
-                $whitelist = explode(",", $extensionList->extension_list);
+                $whitelist = $extensionList->extension_list;
+                $whitelist = str_replace(" ", "", $whitelist);
+                $whitelist = str_replace(".", "", $whitelist);
+                $whitelist = explode(",", $whitelist);
                 $blacklist = null;
             } elseif ($extensionList->type == 'black') {
                 $whitelist = null;
-                $blacklist = explode(",", $extensionList->extension_list);
+                $blacklist = $extensionList->extension_list;
+                $blacklist = str_replace(" ", "", $blacklist);
+                $blacklist = str_replace(".", "", $blacklist);
+                $blacklist = explode(",", $blacklist);
             } else {
                 $whitelist = null;
                 $blacklist = null;

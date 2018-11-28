@@ -153,8 +153,6 @@ foreach ($combinedRelativePaths as $relativePath) {
                     $fileClass = 'file-same';
                 } elseif ($item['left'] == 'modified' || $item['right'] == 'modified') {
                     $fileClass = 'file-modified';
-                } elseif ($item['left'] == 'present' || $item['right'] == 'present') {
-                    $fileClass = 'file-present';
                 } elseif ($item['left'] == 'missing' || $item['right'] == 'missing') {
                     $fileClass = 'file-missing';
                 } else {
