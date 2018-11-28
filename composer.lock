@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c372b67437daa5a91696faba30cbf891",
+    "content-hash": "743c0fae8fd89e1a89b3a6847199074a",
     "packages": [
         {
             "name": "arajcany/pre-press-tricks",
@@ -53,16 +53,16 @@
         },
         {
             "name": "arajcany/tool-box",
-            "version": "0.0.5",
+            "version": "0.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/arajcany/ToolBox.git",
-                "reference": "bf7777e1505c730977134f8dfba2dda25facef97"
+                "reference": "254aeb0db69a9ea9535c5881277b32e505914f4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/arajcany/ToolBox/zipball/bf7777e1505c730977134f8dfba2dda25facef97",
-                "reference": "bf7777e1505c730977134f8dfba2dda25facef97",
+                "url": "https://api.github.com/repos/arajcany/ToolBox/zipball/254aeb0db69a9ea9535c5881277b32e505914f4f",
+                "reference": "254aeb0db69a9ea9535c5881277b32e505914f4f",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
             "keywords": [
                 "tools"
             ],
-            "time": "2018-11-06T01:19:05+00:00"
+            "time": "2018-11-28T19:22:51+00:00"
         },
         {
             "name": "aura/intl",
