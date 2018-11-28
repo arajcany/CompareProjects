@@ -77,6 +77,61 @@ foreach ($combinedRelativePaths as $relativePath) {
 ?>
 <div class="row">
     <div class="col-sm-12">
+        <?php
+        $optsAll = [
+            'class' => 'btn btn-secondary mb-3 mr-3',
+            'id' => 'filter-by-all',
+        ];
+        $optsSame = [
+            'class' => 'btn btn-secondary mb-3 mr-3',
+            'id' => 'filter-by-same',
+        ];
+        $optsModified = [
+            'class' => 'btn btn-secondary mb-3 mr-3',
+            'id' => 'filter-by-modified',
+        ];
+        $optsMissing = [
+            'class' => 'btn btn-secondary mb-3 mr-3',
+            'id' => 'filter-by-missing',
+        ];
+
+        echo $this->Form->button('All', $optsAll);
+        echo $this->Form->button('Same', $optsSame);
+        echo $this->Form->button('Modified', $optsModified);
+        echo $this->Form->button('Missing', $optsMissing);
+        ?>
+        <?php
+        $this->append('viewCustomScripts');
+        ?>
+        <script>
+            $(document).ready(function () {
+                $("#filter-by-all").on("click", function () {
+                    $('.file').removeClass('d-none');
+                });
+
+                $("#filter-by-same").on("click", function () {
+                    $('.file').removeClass('d-none').addClass('d-none');
+                    $('.file-same').removeClass('d-none');
+                });
+
+                $("#filter-by-modified").on("click", function () {
+                    $('.file').removeClass('d-none').addClass('d-none');
+                    $('.file-modified').removeClass('d-none');
+                });
+
+                $("#filter-by-missing").on("click", function () {
+                    $('.file').removeClass('d-none').addClass('d-none');
+                    $('.file-missing').removeClass('d-none');
+                });
+            });
+        </script>
+        <?php
+        $this->end();
+        ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
         <table class="table table-bordered table-sm table-hover">
             <thead>
             <tr>
@@ -94,39 +149,61 @@ foreach ($combinedRelativePaths as $relativePath) {
             foreach ($differenceList as $path => $item) {
                 $currentGroup = $item['grouping'];
 
+                if ($item['left'] == 'same' || $item['right'] == 'same') {
+                    $fileClass = 'file-same';
+                } elseif ($item['left'] == 'modified' || $item['right'] == 'modified') {
+                    $fileClass = 'file-modified';
+                } elseif ($item['left'] == 'present' || $item['right'] == 'present') {
+                    $fileClass = 'file-present';
+                } elseif ($item['left'] == 'missing' || $item['right'] == 'missing') {
+                    $fileClass = 'file-missing';
+                } else {
+                    $fileClass = 'file-same';
+                }
+
                 if ($item['left'] == 'same') {
                     $leftColour = 'green';
+                    $leftClass = 'file-same';
                 } elseif ($item['left'] == 'modified') {
                     $leftColour = 'orange';
+                    $leftClass = 'file-modified';
                 } elseif ($item['left'] == 'present') {
                     $leftColour = 'green';
+                    $leftClass = 'file-present';
                 } elseif ($item['left'] == 'missing') {
                     $leftColour = 'red';
+                    $leftClass = 'file-missing';
                 } else {
                     $leftColour = 'black';
+                    $leftClass = '';
                 }
 
                 if ($item['right'] == 'same') {
                     $rightColour = 'green';
+                    $rightClass = 'file-same';
                 } elseif ($item['right'] == 'modified') {
                     $rightColour = 'orange';
+                    $rightClass = 'file-modified';
                 } elseif ($item['right'] == 'present') {
                     $rightColour = 'green';
+                    $rightClass = 'file-present';
                 } elseif ($item['right'] == 'missing') {
                     $rightColour = 'red';
+                    $rightClass = 'file-missing';
                 } else {
                     $rightColour = 'black';
+                    $rightClass = '';
                 }
 
                 ?>
-                <tr>
+                <tr class="file <?= $fileClass ?>">
                     <td style="color:black">
                         <?php echo $path; ?>
                     </td>
-                    <td style="color:<?= $leftColour; ?>">
+                    <td style="color:<?= $leftColour; ?>" class="<?= $leftClass; ?>">
                         <?php echo $item['left']; ?>
                     </td>
-                    <td style="color:<?= $rightColour; ?>">
+                    <td style="color:<?= $rightColour; ?>" class="<?= $rightClass; ?>">
                         <?php echo $item['right']; ?>
                     </td>
                     <td style="color:black">
