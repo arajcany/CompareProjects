@@ -32,11 +32,12 @@
         <div class="starter-template">
             <div class="row">
                 <div class="col-12">
-                    <h1>Application Stub</h1>
+                    <h1>Compare Projects</h1>
 
                     <?php if (1 == 1) { ?>
                         <p class="lead">
-                            Please select an Action from the Menu.
+                            Easily see in the files difference between 2 folder structures.<br>
+                            The included file diff lets you see the difference between individual files.
                         </p>
                     <?php } ?>
                 </div>

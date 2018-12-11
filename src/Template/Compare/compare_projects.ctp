@@ -213,10 +213,13 @@ foreach ($combinedRelativePaths as $relativePath) {
                             Security::encrypt64Url($leftProject->location . $path),
                             Security::encrypt64Url($rightProject->location . $path)
                         ];
+                        $options = [
+                            'target' => '_blank',
+                        ];
 
                         //diff viewer
                         if ($item['left'] == 'modified' || $item['right'] == 'modified') {
-                            echo $this->Html->link('Diff', $url);
+                            echo $this->Html->link('Diff', $url, $options);
                         }
 
                         ?>
