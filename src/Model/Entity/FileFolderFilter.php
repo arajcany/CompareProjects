@@ -4,16 +4,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ExtensionList Entity
+ * FileFolderFilter Entity
  *
  * @property int $id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property string $name
- * @property string $extension_list
- * @property string $type
+ * @property string $file_folder_filter
  */
-class ExtensionList extends Entity
+class FileFolderFilter extends Entity
 {
 
     /**
@@ -29,7 +28,6 @@ class ExtensionList extends Entity
         'created' => true,
         'modified' => true,
         'name' => true,
-        'extension_list' => true,
-        'type' => true
+        'file_folder_filter' => true
     ];
 }

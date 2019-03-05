@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * ExtensionLists Model
+ * ExtensionFilters Model
  *
- * @method \App\Model\Entity\ExtensionList get($primaryKey, $options = [])
- * @method \App\Model\Entity\ExtensionList newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\ExtensionList[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ExtensionList|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ExtensionList|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ExtensionList patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ExtensionList[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ExtensionList findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ExtensionFilter get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ExtensionFilter newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ExtensionFilter[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ExtensionFilter|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ExtensionFilter|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ExtensionFilter patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ExtensionFilter[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ExtensionFilter findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class ExtensionListsTable extends Table
+class ExtensionFiltersTable extends Table
 {
 
     /**
@@ -33,7 +33,7 @@ class ExtensionListsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('extension_lists');
+        $this->setTable('extension_filters');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
@@ -59,9 +59,9 @@ class ExtensionListsTable extends Table
             ->notEmpty('name');
 
         $validator
-            ->scalar('extension_list')
-            ->maxLength('extension_list', 1024)
-            ->allowEmpty('extension_list');
+            ->scalar('extension_filter')
+            ->maxLength('extension_filter', 1024)
+            ->allowEmpty('extension_filter');
 
         $validator
             ->scalar('type')

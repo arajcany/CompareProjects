@@ -6,18 +6,21 @@ use App\Controller\AppController;
 use App\Model\Table\ProjectsTable;
 use arajcany\ToolBox\Utility\ZipMaker;
 use arajcany\ToolBox\Utility\Security\Security;
-use App\Model\Table\ExtensionListsTable;
+use App\Model\Table\ExtensionFiltersTable;
+use App\Model\Table\FileFolderFiltersTable;
 
 /**
  * Compare Controller
  *
  * @property \App\Model\Table\ProjectsTable $Projects
- * @property \App\Model\Table\ExtensionListsTable $ExtensionLists
+ * @property \App\Model\Table\ExtensionFiltersTable $ExtensionFilters
+ * @property \App\Model\Table\FileFolderFiltersTable $FileFolderFilters
  */
 class CompareController extends AppController
 {
     public $Projects;
-    public $ExtensionLists;
+    public $ExtensionFilters;
+    public $FileFolderFilters;
 
     /**
      * Initialize method
@@ -27,7 +30,8 @@ class CompareController extends AppController
     public function initialize()
     {
         $this->loadModel('Projects');
-        $this->loadModel('ExtensionLists');
+        $this->loadModel('ExtensionFilters');
+        $this->loadModel('FileFolderFilters');
         parent::initialize();
 
         return null;
@@ -44,7 +48,7 @@ class CompareController extends AppController
     }
 
 
-    public function compareProjects($l = null, $r = null, $ext = null)
+    public function compareProjects($l = null, $r = null, $ext = null, $fso = null)
     {
         if ($l == null || $r == null) {
             return $this->redirect(['controller' => 'select']);
@@ -63,21 +67,21 @@ class CompareController extends AppController
         $this->set("rightProject", $rightProject);
 
         /**
-         * @var \App\Model\Entity\ExtensionList $extensionList
+         * @var \App\Model\Entity\ExtensionFilter $extensionFilter
          */
-        if ($ext != null) {
-            $extensionList = $this->ExtensionLists->find('all')->where(['id' => $ext])->first();
-            $this->set("extensionList", $extensionList);
+        if ($ext != null && $ext != 0) {
+            $extensionFilter = $this->ExtensionFilters->find('all')->where(['id' => $ext])->first();
+            $this->set("extensionFilter", $extensionFilter);
 
-            if ($extensionList->type == 'white') {
-                $whitelist = $extensionList->extension_list;
+            if ($extensionFilter->type == 'white') {
+                $whitelist = $extensionFilter->extension_filter;
                 $whitelist = str_replace(" ", "", $whitelist);
                 $whitelist = str_replace(".", "", $whitelist);
                 $whitelist = explode(",", $whitelist);
                 $blacklist = null;
-            } elseif ($extensionList->type == 'black') {
+            } elseif ($extensionFilter->type == 'black') {
                 $whitelist = null;
-                $blacklist = $extensionList->extension_list;
+                $blacklist = $extensionFilter->extension_filter;
                 $blacklist = str_replace(" ", "", $blacklist);
                 $blacklist = str_replace(".", "", $blacklist);
                 $blacklist = explode(",", $blacklist);
@@ -87,26 +91,45 @@ class CompareController extends AppController
             }
 
         } else {
-            $this->set("extensionList", null);
+            $this->set("extensionFilter", null);
             $whitelist = null;
             $blacklist = null;
         }
 
 
-        $zm = new ZipMaker();
-
-        $ignoreFilesFolders = [
+        /**
+         * @var \App\Model\Entity\FileFolderFilter $fileFolderFilter
+         */
+        $alwaysIgnore = [
             "composer.phar",
             ".git\\",
             ".idea\\",
             "logs\\",
             "tmp\\",
-            "vendor\\",
-            "plugins\\",
-            "webroot\\",
-            "tests\\",
-            "src\\XMPie\\",
         ];
+        if ($fso != null && $fso != 0) {
+            $fileFolderFilter = $this->FileFolderFilters->find('all')->where(['id' => $fso])->first();
+            $this->set("fileFolderFilter", $fileFolderFilter);
+
+            $ignoreFilesFolders = $fileFolderFilter->file_folder_filter;
+            if (strlen($ignoreFilesFolders) > 0) {
+                $ignoreFilesFolders = str_replace("\r\n", "\n", $ignoreFilesFolders);
+                $ignoreFilesFolders = str_replace("\r", "\n", $ignoreFilesFolders);
+                $ignoreFilesFolders = explode("\n", $ignoreFilesFolders);
+            } else {
+                $ignoreFilesFolders = [];
+            }
+
+            $ignoreFilesFolders = array_merge($ignoreFilesFolders, $alwaysIgnore);
+            $ignoreFilesFolders = array_unique($ignoreFilesFolders);
+
+        } else {
+            $this->set("fileFolderFilter", null);
+            $ignoreFilesFolders = $alwaysIgnore;
+        }
+
+
+        $zm = new ZipMaker();
 
         $leftFileList = $zm->makeFileList($leftProject->location, $ignoreFilesFolders, false, $whitelist, $blacklist);
         $rightFileList = $zm->makeFileList($rightProject->location, $ignoreFilesFolders, false, $whitelist, $blacklist);

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\ExtensionList $extensionList
+ * @var \App\Model\Entity\ExtensionFilter $extensionFilter
  */
 ?>
 
@@ -10,15 +10,15 @@
         <nav class="large-3 medium-4 columns" id="actions-sidebar">
             <h3><?= __('Actions') ?></h3>
             <ul class="side-nav">
-                <li><?= $this->Html->link(__('List Extension Lists'), ['action' => 'index']) ?></li>
+                <li><?= $this->Html->link(__('List Extension Filters'), ['action' => 'index']) ?></li>
             </ul>
         </nav>
     </div>
     <div class="col-md-10">
-        <div class="extensionLists form large-9 medium-8 columns content">
-            <?= $this->Form->create($extensionList) ?>
+        <div class="extensionFilters form large-9 medium-8 columns content">
+            <?= $this->Form->create($extensionFilter) ?>
             <fieldset>
-                <legend><?= __('Add Extension List') ?></legend>
+                <legend><?= __('Add Extension Filter') ?></legend>
                 <?php
                 $opts = [
                     'label' => [
@@ -28,7 +28,7 @@
                 ];
 
                 echo $this->Form->control('name', $opts);
-                echo $this->Form->control('extension_list', $opts);
+                echo $this->Form->control('extension_filter', $opts);
 
                 $typeSelects = ['black' => 'Blacklist', 'white' => 'Whitelist'];
                 $typeOpts = [

@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Project[]|\Cake\Collection\CollectionInterface $projects
+ * @var \App\Model\Entity\ExtensionFilter[]|\Cake\Collection\CollectionInterface $extensionFilters
+ * @var \App\Model\Entity\FileFolderFilter[]|\Cake\Collection\CollectionInterface $fileFolderFilters
  */
 
 ?>
@@ -34,10 +36,20 @@
                     'label' => [
                         'class' => 'col-sm-2 col-form-label'
                     ],
-                    'options' => $extensionLists->toArray(),
+                    'options' => $extensionFilters->toArray(),
                     'empty' => [null => 'None'],
                 ];
-                echo $this->Form->control('extension-list', $opts);
+                echo $this->Form->control('extension-filter', $opts);
+
+                $opts = [
+                    'label' => [
+                        'class' => 'col-sm-2 col-form-label'
+                    ],
+                    'options' => $fileFolderFilters->toArray(),
+                    'empty' => [null => 'None'],
+                    'default' => 1,
+                ];
+                echo $this->Form->control('file-folder-filter', $opts);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Compare')) ?>

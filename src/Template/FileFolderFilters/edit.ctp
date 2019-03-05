@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\ExtensionList $extensionList
+ * @var \App\Model\Entity\FileFolderFilter $fileFolderFilter
  */
 ?>
 
@@ -12,19 +12,19 @@
             <ul class="side-nav">
                 <li><?= $this->Form->postLink(
                         __('Delete'),
-                        ['action' => 'delete', $extensionList->id],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $extensionList->id)]
+                        ['action' => 'delete', $fileFolderFilter->id],
+                        ['confirm' => __('Are you sure you want to delete # {0}?', $fileFolderFilter->id)]
                     )
                     ?></li>
-                <li><?= $this->Html->link(__('List Extension Lists'), ['action' => 'index']) ?></li>
+                <li><?= $this->Html->link(__('List File Folder Filters'), ['action' => 'index']) ?></li>
             </ul>
         </nav>
     </div>
     <div class="col-md-10">
-        <div class="extensionLists form large-9 medium-8 columns content">
-            <?= $this->Form->create($extensionList) ?>
+        <div class="fileFolderFilters form large-9 medium-8 columns content">
+            <?= $this->Form->create($fileFolderFilter) ?>
             <fieldset>
-                <legend><?= __('Edit Extension List') ?></legend>
+                <legend><?= __('Edit File Folder Filter') ?></legend>
                 <?php
                 $opts = [
                     'label' => [
@@ -34,18 +34,7 @@
                 ];
 
                 echo $this->Form->control('name', $opts);
-                echo $this->Form->control('extension_list', $opts);
-
-                $typeSelects = ['black' => 'Blacklist', 'white' => 'Whitelist'];
-                $typeOpts = [
-                    'label' => [
-                        'class' => 'col-form-label'
-                    ],
-                    'type' => 'select',
-                    'options' => $typeSelects,
-                    'class' => 'form-control',
-                ];
-                echo $this->Form->control('type', $typeOpts);
+                echo $this->Form->control('file_folder_filter', $opts);
                 ?>
             </fieldset>
             <?php

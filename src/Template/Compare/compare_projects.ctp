@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Project $leftProject
  * @var \App\Model\Entity\Project $rightProject
- * @var \App\Model\Entity\ExtensionList $extensionList
+ * @var \App\Model\Entity\ExtensionFilter $extensionFilter
  * @var array $leftFileList
  * @var array $rightFileList
  */

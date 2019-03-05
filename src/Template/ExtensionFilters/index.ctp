@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\ExtensionList[]|\Cake\Collection\CollectionInterface $extensionLists
+ * @var \App\Model\Entity\ExtensionFilter[]|\Cake\Collection\CollectionInterface $extensionFilters
  */
 ?>
 
@@ -10,36 +10,36 @@
         <nav class="large-3 medium-4 columns" id="actions-sidebar">
             <h3><?= __('Actions') ?></h3>
             <ul class="side-nav">
-                <li><?= $this->Html->link(__('New Extension List'), ['action' => 'add']) ?></li>
+                <li><?= $this->Html->link(__('New Extension Filter'), ['action' => 'add']) ?></li>
             </ul>
         </nav>
     </div>
 
     <div class="col-md-10">
-        <div class="extensionLists index large-9 medium-8 columns content">
-            <h3><?= __('Extension Lists') ?></h3>
+        <div class="extensionFilters index large-9 medium-8 columns content">
+            <h3><?= __('Extension Filters') ?></h3>
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('extension_list') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('extension_filter') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('type') ?></th>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($extensionLists as $extensionList): ?>
+                <?php foreach ($extensionFilters as $extensionFilter): ?>
                     <tr>
-                        <td><?= $this->Number->format($extensionList->id) ?></td>
-                        <td><?= h($extensionList->name) ?></td>
-                        <td><?= h($extensionList->extension_list) ?></td>
-                        <td><?= h($extensionList->type) ?></td>
+                        <td><?= $this->Number->format($extensionFilter->id) ?></td>
+                        <td><?= h($extensionFilter->name) ?></td>
+                        <td><?= h($extensionFilter->extension_filter) ?></td>
+                        <td><?= h($extensionFilter->type) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $extensionList->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $extensionList->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $extensionList->id],
-                                ['confirm' => __('Are you sure you want to delete # {0}?', $extensionList->id)]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $extensionFilter->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $extensionFilter->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $extensionFilter->id],
+                                ['confirm' => __('Are you sure you want to delete # {0}?', $extensionFilter->id)]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

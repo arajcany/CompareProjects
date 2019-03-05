@@ -27,8 +27,18 @@
             </li>
             <li class="nav-item active">
                 <?php
-                $title = 'Extension Lists';
-                $url = ['controller' => 'extension_lists'];
+                $title = 'Extension Filters';
+                $url = ['controller' => 'extension_filters'];
+                $options = [
+                    'class' => "nav-link"
+                ];
+                echo $this->Html->link($title, $url, $options)
+                ?>
+            </li>
+            <li class="nav-item active">
+                <?php
+                $title = 'File/Folder Filters';
+                $url = ['controller' => 'file_folder_filters'];
                 $options = [
                     'class' => "nav-link"
                 ];
