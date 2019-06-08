@@ -12,13 +12,17 @@
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use Cake\Core\Configure;
+use Cake\Core\Exception\MissingPluginException;
+use Cake\Datasource\ConnectionManager;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Migrations\Migrations;
 
 /**
  * Application setup class.
@@ -35,6 +39,26 @@ class Application extends BaseApplication
     {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+
+        if (PHP_SAPI === 'cli') {
+            try {
+                $this->addPlugin('Bake');
+            } catch (MissingPluginException $e) {
+                // Do not halt if the plugin is missing
+            }
+        }
+
+        $this->addPlugin('Migrations');
+
+        /*
+         * Only try to load DebugKit in development mode
+         * Debug Kit should not be installed on a production system
+         */
+        if (Configure::read('debug')) {
+            $this->addPlugin(\DebugKit\Plugin::class);
+        }
+
+        $this->buildDatabase();
     }
 
     /**
@@ -48,11 +72,11 @@ class Application extends BaseApplication
         $middlewareQueue
             // Catch any exceptions in the lower layers,
             // and make an error page/response
-            ->add(ErrorHandlerMiddleware::class)
-
+            ->add(new ErrorHandlerMiddleware(null, Configure::read('Error')))
             // Handle plugin/theme assets like CakePHP normally does.
-            ->add(AssetMiddleware::class)
-
+            ->add(new AssetMiddleware([
+                'cacheTime' => Configure::read('Asset.cacheTime')
+            ]))
             // Add routing middleware.
             // Routes collection cache enabled by default, to disable route caching
             // pass null as cacheConfig, example: `new RoutingMiddleware($this)`
@@ -60,5 +84,40 @@ class Application extends BaseApplication
             ->add(new RoutingMiddleware($this, '_cake_routes_'));
 
         return $middlewareQueue;
+    }
+
+
+    /**
+     * Auto build DB and perform Migrations
+     *
+     * @return bool
+     */
+    public function buildDatabase()
+    {
+        $migrate = false;
+        $performMigrationFlag = false;
+
+        //connect to the DB
+        $Conn = ConnectionManager::get('default');
+        if (!$Conn) {
+            return false;
+        }
+
+        $migrations = new Migrations();
+        $status = $migrations->status();
+
+        if (!empty($status)) {
+            foreach ($status as $state) {
+                if ($state['status'] == 'down') {
+                    $performMigrationFlag = true;
+                }
+            }
+        }
+
+        if ($performMigrationFlag) {
+            $migrate = $migrations->migrate();
+        }
+
+        return $migrate;
     }
 }
