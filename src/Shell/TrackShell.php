@@ -5,6 +5,7 @@ namespace App\Shell;
 use App\Model\Table\FileSnapshotsTable;
 use App\Model\Table\ProjectSnapshotsTable;
 use App\Model\Table\ProjectsTable;
+use arajcany\ToolBox\Utility\TextFormatter;
 use arajcany\ToolBox\Utility\ZipMaker;
 use Cake\Console\Shell;
 use Cake\I18n\FrozenTime;
@@ -59,6 +60,13 @@ class TrackShell extends Shell
         $this->out(__("This is the Snapshot Shell"));
 
         $zm = new ZipMaker();
+        $alwaysIgnore = [
+            "composer.phar",
+            ".git\\",
+            ".idea\\",
+            "logs\\",
+            "tmp\\",
+        ];
 
         /**
          * @var \App\Model\Entity\Project $project
@@ -78,9 +86,9 @@ class TrackShell extends Shell
 
 
             //-------START: Build Project Checksum-------
-            $location = $project->location;
+            $location = TextFormatter::makeEndsWith($project->location, DS);
 
-            $list = $zm->makeFileList($location);
+            $list = $zm->makeFileList($location, $alwaysIgnore);
 
             $listShaNames = [];
             $listShaContents = [];

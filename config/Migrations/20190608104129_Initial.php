@@ -229,12 +229,12 @@ class Initial extends AbstractMigration
 
     public function seedFileFolderFilters()
     {
-        $date = gmdate("Y-m-d H:i:s");
+        $currentDate = gmdate("Y-m-d H:i:s");
 
         $data = [
             [
-                'created' => $date,
-                'modified' => $date,
+                'created' => $currentDate,
+                'modified' => $currentDate,
                 'name' => 'Standard Excludes',
                 'file_folder_filter' => ''
                     . 'tmp\\' . "\r\n"

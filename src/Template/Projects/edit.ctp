@@ -35,6 +35,7 @@
                 echo $this->Form->control('name', $opts);
                 echo $this->Form->control('description', $opts);
                 echo $this->Form->control('location', $opts);
+                echo $this->Form->control('track_project', $opts);
                 ?>
             </fieldset>
             <?php
