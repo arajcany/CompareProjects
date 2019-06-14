@@ -4,20 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Project Entity
+ * ProjectSnapshot Entity
  *
  * @property int $id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property string $name
- * @property string $description
- * @property string $location
- * @property bool $track_project
- * @property bool $track_files
+ * @property int $project_id
+ * @property string $checksum
+ * @property int $span
  *
- * @property \App\Model\Entity\ProjectSnapshot[] $project_snapshots
+ * @property \App\Model\Entity\Project $project
+ * @property \App\Model\Entity\FileSnapshot[] $file_snapshots
  */
-class Project extends Entity
+class ProjectSnapshot extends Entity
 {
 
     /**
@@ -32,11 +31,10 @@ class Project extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
-        'name' => true,
-        'description' => true,
-        'location' => true,
-        'track_project' => true,
-        'track_files' => true,
-        'project_snapshots' => true
+        'project_id' => true,
+        'checksum' => true,
+        'span' => true,
+        'project' => true,
+        'file_snapshots' => true
     ];
 }

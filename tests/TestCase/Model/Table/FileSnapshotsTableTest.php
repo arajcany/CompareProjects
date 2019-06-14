@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ProjectsTable;
+use App\Model\Table\FileSnapshotsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ProjectsTable Test Case
+ * App\Model\Table\FileSnapshotsTable Test Case
  */
-class ProjectsTableTest extends TestCase
+class FileSnapshotsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\ProjectsTable
+     * @var \App\Model\Table\FileSnapshotsTable
      */
-    public $Projects;
+    public $FileSnapshots;
 
     /**
      * Fixtures
@@ -24,7 +24,7 @@ class ProjectsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.projects',
+        'app.file_snapshots',
         'app.project_snapshots'
     ];
 
@@ -36,8 +36,8 @@ class ProjectsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Projects') ? [] : ['className' => ProjectsTable::class];
-        $this->Projects = TableRegistry::getTableLocator()->get('Projects', $config);
+        $config = TableRegistry::getTableLocator()->exists('FileSnapshots') ? [] : ['className' => FileSnapshotsTable::class];
+        $this->FileSnapshots = TableRegistry::getTableLocator()->get('FileSnapshots', $config);
     }
 
     /**
@@ -47,7 +47,7 @@ class ProjectsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Projects);
+        unset($this->FileSnapshots);
 
         parent::tearDown();
     }
@@ -73,11 +73,11 @@ class ProjectsTableTest extends TestCase
     }
 
     /**
-     * Test findTrackedProjects method
+     * Test buildRules method
      *
      * @return void
      */
-    public function testFindTrackedProjects()
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -10,8 +10,10 @@
         <nav class="large-3 medium-4 columns" id="actions-sidebar">
             <h3><?= __('Actions') ?></h3>
             <ul class="side-nav">
-                <li><?= $this->Html->link(__('Edit Extension Filter'), ['action' => 'edit', $extensionFilter->id]) ?> </li>
-                <li><?= $this->Form->postLink(__('Delete Extension Filter'), ['action' => 'delete', $extensionFilter->id],
+                <li><?= $this->Html->link(__('Edit Extension Filter'),
+                        ['action' => 'edit', $extensionFilter->id]) ?> </li>
+                <li><?= $this->Form->postLink(__('Delete Extension Filter'),
+                        ['action' => 'delete', $extensionFilter->id],
                         ['confirm' => __('Are you sure you want to delete # {0}?', $extensionFilter->id)]) ?> </li>
                 <li><?= $this->Html->link(__('List Extension Filters'), ['action' => 'index']) ?> </li>
                 <li><?= $this->Html->link(__('New Extension Filter'), ['action' => 'add']) ?> </li>

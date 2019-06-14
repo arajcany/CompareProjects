@@ -10,8 +10,10 @@
         <nav class="large-3 medium-4 columns" id="actions-sidebar">
             <h3><?= __('Actions') ?></h3>
             <ul class="side-nav">
-                <li><?= $this->Html->link(__('Edit File Folder Filter'), ['action' => 'edit', $fileFolderFilter->id]) ?> </li>
-                <li><?= $this->Form->postLink(__('Delete File Folder Filter'), ['action' => 'delete', $fileFolderFilter->id],
+                <li><?= $this->Html->link(__('Edit File Folder Filter'),
+                        ['action' => 'edit', $fileFolderFilter->id]) ?> </li>
+                <li><?= $this->Form->postLink(__('Delete File Folder Filter'),
+                        ['action' => 'delete', $fileFolderFilter->id],
                         ['confirm' => __('Are you sure you want to delete # {0}?', $fileFolderFilter->id)]) ?> </li>
                 <li><?= $this->Html->link(__('List File Folder Filters'), ['action' => 'index']) ?> </li>
                 <li><?= $this->Html->link(__('New File Folder Filter'), ['action' => 'add']) ?> </li>

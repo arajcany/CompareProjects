@@ -1,13 +1,15 @@
 <?php
+
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
+use App\Model\Entity\ProjectSnapshot;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Projects Model
+ *
+ * @property \App\Model\Table\ProjectSnapshotsTable|\Cake\ORM\Association\HasMany $ProjectSnapshots
  *
  * @method \App\Model\Entity\Project get($primaryKey, $options = [])
  * @method \App\Model\Entity\Project newEntity($data = null, array $options = [])
@@ -38,6 +40,10 @@ class ProjectsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('ProjectSnapshots', [
+            'foreignKey' => 'project_id'
+        ]);
     }
 
     /**
@@ -50,14 +56,12 @@ class ProjectsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create')
-            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->allowEmpty('id', 'create');
 
         $validator
             ->scalar('name')
             ->maxLength('name', 50)
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
+            ->allowEmpty('name');
 
         $validator
             ->scalar('description')
@@ -66,23 +70,35 @@ class ProjectsTable extends Table
         $validator
             ->scalar('location')
             ->maxLength('location', 2048)
-            ->requirePresence('location', 'create')
-            ->notEmpty('location');
+            ->allowEmpty('location');
+
+        $validator
+            ->boolean('track_project')
+            ->allowEmpty('track_project');
+
+        $validator
+            ->boolean('track_files')
+            ->allowEmpty('track_files');
 
         return $validator;
     }
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
+    public function findTrackedProjects()
     {
-        $rules->add($rules->isUnique(['id']));
-
-        return $rules;
+        return $this->find('all')
+            ->where(['track_project' => true]);
     }
+
+    /**
+     * @param $projectID
+     * @return bool|null|ProjectSnapshot
+     */
+    public function getLastSnapshotForProject($projectID)
+    {
+        return $this->ProjectSnapshots
+            ->find('all')
+            ->where(['project_id' => $projectID])
+            ->order('id')->last();
+    }
+
 }

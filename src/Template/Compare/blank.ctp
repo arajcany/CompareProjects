@@ -7,8 +7,6 @@
  * @var string $rightFile
  */
 
-use arajcany\ToolBox\Utility\Security\Security;
-
 ?>
 
 <?php

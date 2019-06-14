@@ -21,7 +21,7 @@ class Initial extends AbstractMigration
             ->addColumn('name', 'string', [
                 'default' => null,
                 'limit' => 50,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('extension_filter', 'string', [
                 'default' => null,
@@ -31,7 +31,7 @@ class Initial extends AbstractMigration
             ->addColumn('type', 'string', [
                 'default' => null,
                 'limit' => 50,
-                'null' => false,
+                'null' => true,
             ])
             ->create();
 
@@ -49,13 +49,89 @@ class Initial extends AbstractMigration
             ->addColumn('name', 'string', [
                 'default' => null,
                 'limit' => 50,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('file_folder_filter', 'text', [
                 'default' => null,
                 'limit' => null,
                 'null' => true,
             ])
+            ->create();
+
+        $this->table('file_snapshots')
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('project_snapshot_id', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('filepath', 'string', [
+                'default' => null,
+                'limit' => 1024,
+                'null' => false,
+            ])
+            ->addColumn('checksum', 'string', [
+                'default' => null,
+                'limit' => 50,
+                'null' => false,
+            ])
+            ->addIndex(
+                [
+                    'project_snapshot_id',
+                ]
+            )
+            ->addIndex(
+                [
+                    'checksum',
+                ]
+            )
+            ->create();
+
+        $this->table('project_snapshots')
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('project_id', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('checksum', 'string', [
+                'default' => null,
+                'limit' => 50,
+                'null' => false,
+            ])
+            ->addColumn('span', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addIndex(
+                [
+                    'project_id',
+                ]
+            )
+            ->addIndex(
+                [
+                    'checksum',
+                ]
+            )
             ->create();
 
         $this->table('projects')
@@ -72,7 +148,7 @@ class Initial extends AbstractMigration
             ->addColumn('name', 'string', [
                 'default' => null,
                 'limit' => 50,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('description', 'text', [
                 'default' => null,
@@ -82,18 +158,17 @@ class Initial extends AbstractMigration
             ->addColumn('location', 'string', [
                 'default' => null,
                 'limit' => 2048,
-                'null' => false,
+                'null' => true,
             ])
             ->create();
-
-        $this->seedExtensionFilters();
-        $this->seedFileFolderFilters();
     }
 
     public function down()
     {
         $this->dropTable('extension_filters');
         $this->dropTable('file_folder_filters');
+        $this->dropTable('file_snapshots');
+        $this->dropTable('project_snapshots');
         $this->dropTable('projects');
     }
 
@@ -175,5 +250,4 @@ class Initial extends AbstractMigration
             $table->insert($data)->save();
         }
     }
-
 }

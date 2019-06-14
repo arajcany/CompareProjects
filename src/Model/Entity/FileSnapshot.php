@@ -1,23 +1,22 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
 /**
- * Project Entity
+ * FileSnapshot Entity
  *
  * @property int $id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property string $name
- * @property string $description
- * @property string $location
- * @property bool $track_project
- * @property bool $track_files
+ * @property int $project_snapshot_id
+ * @property string $filepath
+ * @property string $checksum
  *
- * @property \App\Model\Entity\ProjectSnapshot[] $project_snapshots
+ * @property \App\Model\Entity\ProjectSnapshot $project_snapshot
  */
-class Project extends Entity
+class FileSnapshot extends Entity
 {
 
     /**
@@ -32,11 +31,9 @@ class Project extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
-        'name' => true,
-        'description' => true,
-        'location' => true,
-        'track_project' => true,
-        'track_files' => true,
-        'project_snapshots' => true
+        'project_snapshot_id' => true,
+        'filepath' => true,
+        'checksum' => true,
+        'project_snapshot' => true
     ];
 }
