@@ -6,6 +6,7 @@
 /logs/*
 /tmp/*
 /vendor/*
+/config/CompareProjects_DB.sqlite
 
 # OS generated files #
 ######################
