@@ -161,6 +161,9 @@ class Initial extends AbstractMigration
                 'null' => true,
             ])
             ->create();
+
+        $this->seedExtensionFilters();
+        $this->seedFileFolderFilters();
     }
 
     public function down()
