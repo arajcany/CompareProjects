@@ -19,6 +19,14 @@ if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
+if (!defined('LS')) {
+    if (DS === '\\') {
+        define('LS', "\r\n");
+    } else {
+        define('LS', "\n");
+    }
+}
+
 /**
  * These defines should only be edited if you have cake installed in
  * a directory layout other than the way it is distributed.
@@ -48,6 +56,10 @@ define('CONFIG', ROOT . DS . 'config' . DS);
 
 /**
  * File path to the webroot directory.
+ *
+ * To derive your webroot from your webserver change this to:
+ *
+ * `define('WWW_ROOT', rtrim($_SERVER['DOCUMENT_ROOT'], DS) . DS);`
  */
 define('WWW_ROOT', ROOT . DS . 'webroot' . DS);
 

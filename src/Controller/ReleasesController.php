@@ -84,6 +84,8 @@ class ReleasesController extends AppController
             //ignore files and folders relative to the ROOT
             $ignoreFilesFolders = [
                 "config\\app.php",
+                "config\\config_local.php",
+                "config\\CompareProjects_DB.sqlite",
                 "bin\\installer\\",
                 ".git\\",
                 ".idea\\",
@@ -92,7 +94,6 @@ class ReleasesController extends AppController
                 "tests\\",
                 "src\\Controller\\ReleasesController.php",
                 "src\\Template\\Releases\\",
-                "WaSP\\POD\\logs\\",
             ];
 
             $fileList = $zm->makeFileList($baseDir, $ignoreFilesFolders);
