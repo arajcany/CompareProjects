@@ -115,6 +115,7 @@ class CompareController extends AppController
             if (strlen($ignoreFilesFolders) > 0) {
                 $ignoreFilesFolders = str_replace("\r\n", "\n", $ignoreFilesFolders);
                 $ignoreFilesFolders = str_replace("\r", "\n", $ignoreFilesFolders);
+                $ignoreFilesFolders = trim($ignoreFilesFolders);
                 $ignoreFilesFolders = explode("\n", $ignoreFilesFolders);
             } else {
                 $ignoreFilesFolders = [];
